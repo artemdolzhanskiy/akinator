@@ -1,0 +1,1 @@
+((alive(person(magic(man(wizard)(witch))(close_fight(knight)(hunter)))(fly(electro(eletcrogragon)(dragon))(go_fast(elite_barbarians)(golem))))(building_1_or_spell_0(spawner(gravestone)(cannon))(lightwight(log)(rocket))))())
