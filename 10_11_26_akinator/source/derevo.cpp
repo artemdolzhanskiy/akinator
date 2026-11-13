@@ -1,39 +1,62 @@
 #include "../headers/derevo.h"
 
-void AddTreeNode(struct TREE_NODE * derevo, const char * value){
-    assert(derevo);
 
-    if (!strncmp(derevo->data,"", MAX_LENGTH_STR)){
-        //printf("ok");
-        strcpy(derevo->data, value);
+void poisk(struct TREE_NODE * derevo){
+    printf("Hi! Think of a character from the game Clash Royale, and I will try to guess who it is.\n");
+    printf("I will ask some questions, and you should respond with 1 for yes or 2 for no.\n");
+
+
+    char c = 0;
+    while (derevo->left != NULL && derevo->right != NULL){
+        printf("%s ? ", derevo->data);
+        
+        scanf(" %c", &c);
+        if (c == '0'){
+            derevo = derevo->right;
+        }
+        if (c == '1'){
+            derevo = derevo->left;
+        }
+    }
+
+
+    printf("%s ?", derevo->data);
+
+    scanf(" %c", &c);
+    if (c == '1'){
+        printf("ok, bye");
         return;
     }
 
-    if (true){
-        if (derevo->right == NULL){
-            derevo->right = (struct TREE_NODE *)calloc(1, sizeof(struct TREE_NODE));
-            derevo->right->parent = derevo;
+    if (c == '0'){
+        printf("And what is the answer then? ");
+        char ans[MAX_LENGTH_STR] = "";
+        scanf(" %s", ans);
+        printf("What is the difference between a %s and a %s? ", derevo->data, ans);
+        char pr[MAX_LENGTH_STR] = "";
+        scanf(" %s", pr);
+        printf("got it\n");
+        
+        derevo->left = (struct TREE_NODE *)calloc(1, sizeof(struct TREE_NODE));
+        strncpy(derevo->left->data, ans, MAX_LENGTH_STR);
+        derevo->left->parent = derevo;
 
-            strcpy(derevo->right->data, value);
-            
-        }
-        else{
-            AddTreeNode(derevo->right, value);
-        }
+        derevo->right = (struct TREE_NODE *)calloc(1, sizeof(struct TREE_NODE));
+        strncpy(derevo->right->data, derevo->data, MAX_LENGTH_STR);
+        derevo->right->parent = derevo;
+
+        derevo->data[0] = '\0';
+        strncpy(derevo->data, pr, 50);
+
+        //printf("%s\n", derevo->data);
+        //printf("%s\n", derevo->left->data);
+        //printf("%s\n", derevo->right->data);
     }
+}
 
-    if (  true    ){
-        if (derevo->left == NULL){
-            derevo->left = (struct TREE_NODE *)calloc(1, sizeof(struct TREE_NODE));
-            derevo->left->parent = derevo;
-
-            strcpy(derevo->left->data, value);
-        }
-        else{
-            AddTreeNode(derevo->left, value);
-        }
-    }
-
+void AddTreeNode(struct TREE_NODE * derevo, const char * value){
+    assert(derevo);
+    assert(value);
 }
 
 void PrintTree(struct TREE_NODE * derevo, FILE * name_file){

@@ -1,6 +1,7 @@
 #include "../headers/graf_dump.h"
 
 void dfs(FILE * file_dump, FILE * file_dump_bez, struct TREE_NODE * derevo){
+    assert(derevo);
 
     char vopros_da_vlevo = ' ';
     char vopros_net_vpravo = ' ';
@@ -9,13 +10,21 @@ void dfs(FILE * file_dump, FILE * file_dump_bez, struct TREE_NODE * derevo){
             vopros_da_vlevo = ' ';
         }
 
-        fprintf(file_dump, "%s[shape=Mrecord, label=\" {data = %s | %p | {left - %p  | right - %p} }\"]\n ",
+        if (derevo->left->left == NULL && derevo->left->right == NULL){
+            fprintf(file_dump, "%s[shape=Mrecord, style=\"filled\", fillcolor=\"lightgreen\", label=\" {data = %s | %p | {left - %p  | right - %p} }\"]\n ",
             derevo->left->data, derevo->left->data, derevo->left, derevo->left->left, derevo->left->right);
-        
-        fprintf(file_dump_bez, " %s->%s%c[label=\" 1\", style=\"bold\"]\n", derevo->data, derevo->left->data, vopros_da_vlevo);
+        }
+        else{
+            fprintf(file_dump, "%s[shape=Mrecord, style=\"filled\", fillcolor=\"lightblue\", label=\" {data = %s | %p | {left - %p  | right - %p} }\"]\n ",
+            derevo->left->data, derevo->left->data, derevo->left, derevo->left->left, derevo->left->right);
+        }
+
+
+        fprintf(file_dump_bez, "%s[shape=Mrecord, style=\"filled\", fillcolor=\"lightblue\"]\n ", derevo->left->data);
+        fprintf(file_dump_bez, " %s->%s%c[label=\" 1\", style=\"bold\", color=\"darkgreen\"]\n", derevo->data, derevo->left->data, vopros_da_vlevo);
         
 
-        fprintf(file_dump, " %s->%s%c[label=\" 1\", style=\"bold\"]\n", derevo->data, derevo->left->data, vopros_da_vlevo);
+        fprintf(file_dump, " %s->%s%c[label=\" 1\", style=\"bold\", color=\"darkgreen\"]\n", derevo->data, derevo->left->data, vopros_da_vlevo);
         dfs(file_dump, file_dump_bez, derevo->left);
     }
 
@@ -24,12 +33,19 @@ void dfs(FILE * file_dump, FILE * file_dump_bez, struct TREE_NODE * derevo){
             vopros_net_vpravo = ' ';
         }
 
-        fprintf(file_dump, "%s[shape=Mrecord, label=\" {data = %s | %p | {left - %p  | right - %p} }\"]\n ",
-             derevo->right->data, derevo->right->data, derevo->right, derevo->right->left, derevo->right->right);
+        if (derevo->right->left == NULL && derevo->right->right == NULL){
+            fprintf(file_dump, "%s[shape=Mrecord, style=\"filled\", fillcolor=\"lightgreen\", label=\" {data = %s | %p | {left - %p  | right - %p} }\"]\n ",
+            derevo->right->data, derevo->right->data, derevo->right, derevo->right->left, derevo->right->right);
+        }
+        else{
+            fprintf(file_dump, "%s[shape=Mrecord, style=\"filled\", fillcolor=\"lightblue\", label=\" {data = %s | %p | {left - %p  | right - %p} }\"]\n ",
+            derevo->right->data, derevo->right->data, derevo->right, derevo->right->left, derevo->right->right);
+        }
         
-        fprintf(file_dump_bez, " %s->%s%c[label=\" 0\", style=\"bold\"]\n", derevo->data, derevo->right->data, vopros_net_vpravo);
+        fprintf(file_dump_bez, "%s[shape=Mrecord, style=\"filled\", fillcolor=\"lightblue\"]\n ", derevo->right->data);
+        fprintf(file_dump_bez, " %s->%s%c[label=\" 0\", style=\"bold\", color=\"darkred\"]\n", derevo->data, derevo->right->data, vopros_net_vpravo);
 
-        fprintf(file_dump, " %s->%s%c[label=\" 0\", style=\"bold\"]\n", derevo->data, derevo->right->data, vopros_net_vpravo);
+        fprintf(file_dump, " %s->%s%c[label=\" 0\", style=\"bold\", color=\"darkred\"]\n", derevo->data, derevo->right->data, vopros_net_vpravo);
         dfs(file_dump, file_dump_bez, derevo->right);
     }
     
@@ -37,6 +53,8 @@ void dfs(FILE * file_dump, FILE * file_dump_bez, struct TREE_NODE * derevo){
 
 
 void GrafDump(struct TREE_NODE * derevo){
+    assert(derevo);
+    
     FILE * file_dump = fopen("DUMP.dot", "w");
     FILE * file_dump_bez = fopen("DUMP_bez.dot", "w");
 
@@ -44,16 +62,12 @@ void GrafDump(struct TREE_NODE * derevo){
     fprintf(file_dump_bez, "digraph {\n");
 
 
-    fprintf(file_dump, "%s[shape=Mrecord, label=\" {data = %s | %p | {left - %p  | right - %p} }\"]\n ", derevo->left->data, derevo->left->data, derevo->left, derevo->left->left, derevo->left->right);
-    
+    fprintf(file_dump, "%s[shape=Mrecord, style=\"filled\", fillcolor=\"lightblue\", label=\" {data = %s | %p | {left - %p  | right - %p} }\"]\n ", derevo->left->data, derevo->left->data, derevo->left, derevo->left->left, derevo->left->right);
+    fprintf(file_dump_bez, "%s[shape=Mrecord]\n ", derevo->left->data);
+
     dfs(file_dump, file_dump_bez, derevo->left);
     
-    //fprintf(file_dump, " %d [shape=record, label=\" {num = %d | data = %d | {next = %d  | prev %d} }\", fillcolor = \"%s\" ]\n");
-
     
-    
-
-    //fprintf(file_dump, " %d->%d[style=\"bold\"]\n", data[pos], data[next[pos]]);
    
     fprintf(file_dump, "}");
     fprintf(file_dump_bez, "}");

@@ -16,6 +16,8 @@ struct TREE_NODE{
     char data[MAX_LENGTH_STR];
 };
 
+void poisk(struct TREE_NODE * derevo);
+
 void AddTreeNode(struct TREE_NODE * derevo, const char * value);
 
 void PrintTree(struct TREE_NODE * derevo, FILE * name_file);
