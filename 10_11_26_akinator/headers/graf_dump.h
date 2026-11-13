@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void dfs(FILE * file_dump, FILE * file_dump_bez, struct TREE_NODE * derevo);
+void dfs(FILE * file_dump, FILE * file_dump_bez, struct TREE_NODE * derevo, int *cnt);
 
 void GrafDump(struct TREE_NODE * derevo);
 

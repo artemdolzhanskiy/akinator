@@ -18,11 +18,13 @@ struct TREE_NODE{
 
 void poisk(struct TREE_NODE * derevo);
 
-void AddTreeNode(struct TREE_NODE * derevo, const char * value);
-
 void PrintTree(struct TREE_NODE * derevo, FILE * name_file);
 
 struct TREE_NODE * InputTree(FILE * name_file);
+
+void yes_ (char * str);
+
+void not_ (char * str);
 
 
 #endif

@@ -3,12 +3,14 @@
 
 void poisk(struct TREE_NODE * derevo){
     printf("Hi! Think of a character from the game Clash Royale, and I will try to guess who it is.\n");
-    printf("I will ask some questions, and you should respond with 1 for yes or 2 for no.\n");
+    printf("I will ask some questions, and you should respond with 1 for yes or 0 for no.\n");
 
 
     char c = 0;
     while (derevo->left != NULL && derevo->right != NULL){
+        not_(derevo->data);
         printf("%s ? ", derevo->data);
+        yes_(derevo->data);
         
         scanf(" %c", &c);
         if (c == '0'){
@@ -19,8 +21,9 @@ void poisk(struct TREE_NODE * derevo){
         }
     }
 
-
-    printf("%s ?", derevo->data);
+    not_(derevo->data);
+    printf("%s ? ", derevo->data);
+    yes_(derevo->data);
 
     scanf(" %c", &c);
     if (c == '1'){
@@ -30,11 +33,27 @@ void poisk(struct TREE_NODE * derevo){
 
     if (c == '0'){
         printf("And what is the answer then? ");
+
         char ans[MAX_LENGTH_STR] = "";
-        scanf(" %s", ans);
+        //scanf(" %s ", ans);
+        scanf(" ");
+        fgets(ans, MAX_LENGTH_STR, stdin);
+        ans[strcspn(ans, "\n")] = '\0';
+        //printf("--%s--\n", ans);
         printf("What is the difference between a %s and a %s? ", derevo->data, ans);
+        yes_(ans);
+        //printf("--%s--\n", ans);
+
+
         char pr[MAX_LENGTH_STR] = "";
-        scanf(" %s", pr);
+        //scanf(" %s ", pr);
+        scanf(" ");
+        fgets(pr, MAX_LENGTH_STR, stdin);
+        pr[strcspn(pr, "\n")] = '\0';
+        //printf("--%s--\n", pr);
+        yes_(pr);
+        //printf("--%s--\n", pr);
+
         printf("got it\n");
         
         derevo->left = (struct TREE_NODE *)calloc(1, sizeof(struct TREE_NODE));
@@ -54,10 +73,6 @@ void poisk(struct TREE_NODE * derevo){
     }
 }
 
-void AddTreeNode(struct TREE_NODE * derevo, const char * value){
-    assert(derevo);
-    assert(value);
-}
 
 void PrintTree(struct TREE_NODE * derevo, FILE * name_file){
     fprintf(name_file, "(");
@@ -140,4 +155,22 @@ struct TREE_NODE * InputTree(FILE * name_file){
     }
 
     return derevo;
+}
+
+void not_ (char * str){
+    int i = 0;
+    while(str[i] != '\0'){
+        if (str[i] == '_')
+            str[i] = ' ';
+        i += 1;
+    }
+}
+
+void yes_ (char * str){
+    int i = 0;
+    while(str[i] != '\0'){
+        if (str[i] == ' ')
+            str[i] = '_';
+        i += 1;
+    }
 }

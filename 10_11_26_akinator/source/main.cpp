@@ -24,6 +24,10 @@ int main(){
 
     GrafDump(derevo);
 
+    int res = system("dot -Tpng DUMP.dot -o graph.png");
+
+    res += 1;
+
 
 
     return 0;
