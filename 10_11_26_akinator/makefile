@@ -5,4 +5,4 @@ SANITIZERS := -fsanitize=address,undefined,leak
 FLAGS := $(FLAGS_WINDOWS)
 
 all:
-	@g++ $(FLAGS) source/main.cpp source/derevo.cpp source/graf_dump.cpp -Iheaders -o derevo.exe
+	@g++ $(FLAGS) source/main.cpp source/akinator.cpp source/graph_dump.cpp -Iheaders -o akinator.exe

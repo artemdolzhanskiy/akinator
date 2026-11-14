@@ -1,28 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "C:\Users\dolzh\OneDrive\Desktop\pr\10_11_26_akinator\headers\graf_dump.h"
+#include "C:\Users\dolzh\OneDrive\Desktop\pr\10_11_26_akinator\headers\graph_dump.h"
 
 int main(){
-    struct TREE_NODE * derevo = (struct TREE_NODE *)calloc(1, sizeof(struct TREE_NODE));
+    struct TREE_NODE * akinator_tree = (struct TREE_NODE *)calloc(1, sizeof(struct TREE_NODE));
     FILE * file_input = fopen("base.txt", "r");
-    derevo = InputTree(file_input);
+    akinator_tree = InputTree(file_input);
     fclose(file_input);
 
     //------------------------------------------------------------------------------------
 
 
-    poisk(derevo->left);
+    Poisk(akinator_tree->left);
 
 
     //-------------------------------------------------------------------------------------
 
     
     FILE * file_print = fopen("base.txt", "w");
-    PrintTree(derevo->left, file_print);
+    PrintTree(akinator_tree->left, file_print);
     fclose(file_print);
 
-    GrafDump(derevo);
+    GraphDump(akinator_tree);
 
     int res = system("dot -Tpng DUMP.dot -o graph.png");
 
